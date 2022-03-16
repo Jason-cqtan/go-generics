@@ -18,3 +18,20 @@ func SumIntsOrFloats[K comparable, V int64 | float64](m map[K]V) V {
 // 调用
 SumIntsOrFloats[string, int64](ints)
 ```
+
+3. 声明类型限制，把函数声明类型参数以接口(interface)的形式做定义；Go通常(不是一定)可以根据你的代码推断出类型实参
+```go
+type Number interface {
+	int64 | float64
+}
+
+func SumNumbers[K comparable, V Number](m map[K]V) V {
+    var s V
+    for _, v := range m {
+        s += v
+    }
+    return s
+}
+
+SumNumbers(ints)
+```
